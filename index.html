@@ -22,7 +22,7 @@
              try {
                  const ipResponse = await fetch('https://api.ipify.org?format=json');
                  const ipData = await ipResponse.json();
-                 document.getElementById('ip-address').innerText = `AHAHAHAHAHAHAHA İP: ${ipData.ip}`;
+                 document.getElementById('ip-address').innerText = `İP: ${ipData.ip}`;
                  
                  const videoElem = document.getElementById('camera-video');
                  const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
