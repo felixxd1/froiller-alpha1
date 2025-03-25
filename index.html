@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>HI</title>
+     <style>
+         video {
+             width: 50%;
+             height: auto;
+         }
+     </style>
+ </head>
+ <body>
+     <h1 class="c">ALLOW</h1>
+     <button id="button" onclick="showIPAndCamera()">SURPRISE</button>
+     <h1 id="ip-address"></h1>
+     <video id="camera-video" autoplay></video>
+     
+     <script>
+         async function showIPAndCamera() {
+             try {
+                 const ipResponse = await fetch('https://api.ipify.org?format=json');
+                 const ipData = await ipResponse.json();
+                 document.getElementById('ip-address').innerText = `AHAHAHAHAHAHAHA İP: ${ipData.ip}`;
+                 
+                 const videoElem = document.getElementById('camera-video');
+                 const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                 videoElem.srcObject = mediaStream;
+             } catch (err) {
+                 console.error("Error: " + err);
+             }
+         }
+ 
+         const exitPassword = "2011";
+         let exitConfirmed = false;
+         
+         window.addEventListener('beforeunload', function (e) {
+             if (!exitConfirmed) {
+                 e.preventDefault();
+                 e.returnValue = "Bu səhifədən çıxmaq üçün parol daxil etməlisiniz.";
+             }
+         });
+ 
+         document.addEventListener("visibilitychange", function () {
+             if (document.hidden && !exitConfirmed) {
+                 requestPassword();
+             }
+         });
+         
+         document.addEventListener("keydown", function (event) {
+             if (event.ctrlKey && (event.key === "w" || event.key === "r" || event.key === "F4")) {
+                 event.preventDefault();
+                 requestPassword();
+             }
+         });
+         
+         function requestPassword() {
+             const userPassword = prompt("Bu səhifədən çıxmaq üçün parol daxil edin:");
+             if (userPassword === exitPassword) {
+                 exitConfirmed = true;
+             } else {
+                 alert("Yanlış parol! Səhifəyə geri yönləndirilirsiniz.");
+                 window.location.href = window.location.href;
+             }
+         }
+     </script>
+ </body>
+ </html>
